@@ -1,4 +1,4 @@
-require('dotenv').config()
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const port = process.env.PORT || 5000;
@@ -9,9 +9,6 @@ const app = express();
 // middel ware !
 app.use(cors());
 app.use(express.json());
-
-// ChillGame
-// GFVMZlWzcUF2tFKg
 
 app.get("/", (req, res) => {
   res.send("chill gamer data coming soon");
@@ -40,6 +37,10 @@ async function run() {
     const gameReviewCollection = client
       .db("gameReviewDB")
       .collection("gameReview");
+
+    const myWatchlistCollection = client
+      .db("gameReviewDB")
+      .collection("myWatchlist");
 
     app.get("/gameReviews", async (req, res) => {
       const quary = gameReviewCollection.find();
@@ -77,7 +78,11 @@ async function run() {
           publishing: doc.publishing,
         },
       };
-      const result = await gameReviewCollection.updateOne(quary, updateDoc, options);
+      const result = await gameReviewCollection.updateOne(
+        quary,
+        updateDoc,
+        options
+      );
       res.send(result);
     });
 
@@ -85,6 +90,20 @@ async function run() {
       const id = req.params.id;
       const quary = { _id: new ObjectId(id) };
       const result = await gameReviewCollection.deleteOne(quary);
+      res.send(result);
+    });
+
+    // MY WISH LIST COLLECTION!
+
+    app.post("/myWatchlist", async (req, res) => {
+      const doc = req.body;
+      const result = await myWatchlistCollection.insertOne(doc);
+      res.send(result);
+    });
+
+    app.get("/myWatchlist", async (req, res) => {
+      const quary = myWatchlistCollection.find();
+      const result = await quary.toArray();
       res.send(result);
     });
 
