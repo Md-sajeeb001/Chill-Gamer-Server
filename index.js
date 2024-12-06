@@ -1,4 +1,4 @@
-require("dotenv").config();
+require('dotenv').config()
 const express = require("express");
 const cors = require("cors");
 const port = process.env.PORT || 5000;
@@ -57,6 +57,27 @@ async function run() {
     app.post("/gameReviews", async (req, res) => {
       const doc = req.body;
       const result = await gameReviewCollection.insertOne(doc);
+      res.send(result);
+    });
+
+    app.put("/gameReviews/:id", async (req, res) => {
+      const id = req.params.id;
+      const quary = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const doc = req.body;
+      const updateDoc = {
+        $set: {
+          thumbnail: doc.thumbnail,
+          select: doc.select,
+          rating: doc.rating,
+          name: doc.name,
+          email: doc.email,
+          description: doc.description,
+          Gamename: doc.Gamename,
+          publishing: doc.publishing,
+        },
+      };
+      const result = await gameReviewCollection.updateOne(quary, updateDoc, options);
       res.send(result);
     });
 
