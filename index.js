@@ -86,7 +86,12 @@ async function run() {
       res.send(result);
     });
 
-    
+    app.delete("/gameReviews/:id", async (req, res) => {
+      const id = req.params.id;
+      const quary = { _id: new ObjectId(id) };
+      const result = await gameReviewCollection.deleteOne(quary);
+      res.send(result);
+    });
 
     // MY WATCH LIST COLLECTION!
 
