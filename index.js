@@ -93,7 +93,7 @@ async function run() {
       res.send(result);
     });
 
-    // MY WISH LIST COLLECTION!
+    // MY WATCH LIST COLLECTION!
 
     app.post("/myWatchlist", async (req, res) => {
       const doc = req.body;
