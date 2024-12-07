@@ -95,11 +95,7 @@ async function run() {
 
     // MY WATCH LIST COLLECTION!
 
-    app.post("/myWatchlist", async (req, res) => {
-      const doc = req.body;
-      const result = await myWatchlistCollection.insertOne(doc);
-      res.send(result);
-    });
+    
 
     app.get("/myWatchlist", async (req, res) => {
       const quary = myWatchlistCollection.find();
