@@ -42,6 +42,13 @@ async function run() {
       .db("gameReviewDB")
       .collection("myWatchlist");
 
+    const blogsCollection = client
+      .db("gameReviewDB")
+      .collection("blogs");
+
+
+    //  ======================================= //
+
     app.get("/gameReviews", async (req, res) => {
       const quary = gameReviewCollection.find();
       const result = await quary.toArray();
@@ -93,8 +100,8 @@ async function run() {
       res.send(result);
     });
 
-    // MY WATCH LIST COLLECTION!
 
+    // MY WATCH LIST COLLECTION!
     app.post("/myWatchlist", async (req, res) => {
       const doc = req.body;
       const result = await myWatchlistCollection.insertOne(doc);
@@ -105,6 +112,12 @@ async function run() {
       const quary = myWatchlistCollection.find();
       const result = await quary.toArray();
       res.send(result);
+    });
+
+    // get blogs from db
+    app.get("/blogs", async (req, res) => {
+      const blogs = await blogsCollection.find().toArray();
+      res.send(blogs);
     });
 
     // Send a ping to confirm a successful connection
