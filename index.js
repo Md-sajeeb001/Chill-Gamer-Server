@@ -42,10 +42,7 @@ async function run() {
       .db("gameReviewDB")
       .collection("myWatchlist");
 
-    const blogsCollection = client
-      .db("gameReviewDB")
-      .collection("blogs");
-
+    const blogsCollection = client.db("gameReviewDB").collection("blogs");
 
     //  ======================================= //
 
@@ -99,7 +96,6 @@ async function run() {
       const result = await gameReviewCollection.deleteOne(quary);
       res.send(result);
     });
-
 
     // MY WATCH LIST COLLECTION!
     app.post("/myWatchlist", async (req, res) => {
